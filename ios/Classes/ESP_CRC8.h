@@ -53,7 +53,7 @@
 /**
  * Updates the checksum value with the given byte.
  *
- * @param val
+ * @param value
  *            the byte to update the checksum with.
  */
 - (void)updateWithValue:(int)value;

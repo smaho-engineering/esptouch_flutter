@@ -27,7 +27,6 @@
  *
  * @param timeout
  *            the timeout in milliseconds or 0 for no timeout.
- * @return true whether the timeout is set suc
  */
 - (void) setSocketTimeout: (int) timeout;
 

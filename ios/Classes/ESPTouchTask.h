@@ -28,10 +28,8 @@
  *            the Ap's ssid
  * @param apBssid
  *            the Ap's bssid
- * @param apPassword
+ * @param apPwd
  *            the Ap's password
- * @param isSsidHidden
- *            whether the Ap's ssid is hidden
  */
 - (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd;
 
@@ -47,14 +45,10 @@
  *            the Ap's ssid
  * @param apBssid
  *            the Ap's bssid
- * @param apPassword
+ * @param apPwd
  *            the Ap's password
- * @param isSsidHidden
- *            whether the Ap's ssid is hidden
- * @param timeoutMillisecond(it should be >= 15000+6000)
- * 			  millisecond of total timeout
- * @param context
- *            the Context of the Application
+ * @param timeoutMillisecond
+ * 			  millisecond of total timeout (it should be >= 15000+6000)
  */
 - (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd andTimeoutMillisecond: (int) timeoutMillisecond;
 
@@ -65,14 +59,12 @@
  *            the Ap's ssid
  * @param apBssid
  *            the Ap's bssid
- * @param apPassword
+ * @param apPwd
  *            the Ap's password
  * @param isSsidHidden
  *            whether the Ap's ssid is hidden
- * @param timeoutMillisecond(it should be >= 15000+6000)
- * 			  millisecond of total timeout
- * @param context
- *            the Context of the Application
+ * @param timeoutMillisecond
+ * 			  millisecond of total timeout (it should be >= 15000+6000)
  */
 - (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd andIsSsidHiden: (BOOL) isSsidHidden andTimeoutMillisecond: (int) timeoutMillisecond  __deprecated_msg("Use initWithApSsid:(NSString *) andApBssid:(NSString *) andApPwd:(NSString *) andTimeoutMillisecond:(int) instead.");
 

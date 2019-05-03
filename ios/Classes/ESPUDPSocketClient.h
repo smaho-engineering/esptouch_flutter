@@ -17,11 +17,11 @@
 /**
  * send the data by UDP
  *
- * @param bytes
+ * @param bytesArray2
  *            the array of datas to be sent
- * @param targetHost
+ * @param targetHostName
  *            the host name of target, e.g. 192.168.1.101
- * @param targetPort
+ * @param port
  *            the port of target
  * @param interval
  *            the milliseconds to between each UDP sent
@@ -32,15 +32,15 @@
 /**
  * send the data by UDP
  *
- * @param data
+ * @param bytesArray2
  *            the data to be sent
  * @param offset
  * 			  the offset which data to be sent
  * @param count
  * 			  the count of the data
- * @param targetHost
+ * @param targetHostName
  *            the host name of target, e.g. 192.168.1.101
- * @param targetPort
+ * @param port
  *            the port of target
  * @param interval
  *            the milliseconds to between each UDP sent
