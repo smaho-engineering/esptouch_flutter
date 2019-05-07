@@ -15,12 +15,10 @@ FlutterEventSink _eventSink;
   NSString* bssid = result.bssid;
   NSString* ip = [ESP_NetUtil descriptionInetAddr4ByData:result.ipAddrData];
   NSDictionary* resultDictionairy = @{ @"bssid": bssid, @"ip" : ip};
-  _eventSink(resultDictionairy);
-  /* // It used to be like that, verify if it's okay to skip this and clean up related code if it is
-  dispatch_async(dispatch_get_main_queue(), ^{
+  // _eventSink(resultDictionairy);
+  dispatch_async(dispatch_get_current_queue(), ^{
     _eventSink(resultDictionairy);
   });
-  */
 }
 
 - (id) initWithBSSID: (NSString*) bssid andSSID:(NSString*)ssid andPassword:(NSString*)password andCount:(int)count {
@@ -43,8 +41,11 @@ FlutterEventSink _eventSink;
   [self._esptouchTask setEsptouchDelegate:self];
   [self._esptouchTask setPackageBroadcast:TRUE];
   [self._condition unlock];
-  NSArray * esptouchResults = [self._esptouchTask executeForResults:5];
-  NSLog(@"ESPViewController executeForResult() result is: %@", esptouchResults);
+  dispatch_queue_t  queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+  dispatch_async(queue, ^{
+    NSArray * esptouchResults = [self._esptouchTask executeForResults:5];
+    NSLog(@"ESPViewController executeForResult() result is: %@", esptouchResults);
+  });
 }
 
 
