@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO(smaho): We don't need view controllers as it's a Flutter Plugin. Remove ESPViewController.
 @interface ESPViewController : UIViewController <UITextFieldDelegate>
 
 @property(weak, nonatomic) IBOutlet UILabel *ssidLabel;

@@ -41,6 +41,7 @@ static int _datagramCount = 0;
 - (id)init {
     self = [super init];
     if (self) {
+        // TODO(smaho): we need to be able to make this configurable
         self.intervalGuideCodeMillisecond = 8;
         self.intervalDataCodeMillisecond = 8;
         self.timeoutGuideCodeMillisecond = 2000;

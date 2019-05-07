@@ -23,15 +23,12 @@
 
 /**
  * Set the socket timeout in milliseconds
- *
- * @param timeout
- *            the timeout in milliseconds or 0 for no timeout.
+ * @param timeout the timeout in milliseconds or 0 for no timeout.
  */
 - (void)setSocketTimeout:(int)timeout;
 
 /**
  * Receive one byte from the port
- *
  * @return one byte receive from the port or UINT8_MAX(it impossible receive it from the socket)
  */
 - (Byte)receiveOneByte4;

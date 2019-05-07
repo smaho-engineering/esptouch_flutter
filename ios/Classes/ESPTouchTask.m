@@ -382,9 +382,7 @@
         expectTaskResultCount = INT32_MAX;
     }
     [self._parameter setExpectTaskResultCount:expectTaskResultCount];
-
     [self __checkTaskValid];
-
     // generator the esptouch byte[][] to be transformed, which will cost
     // some time(maybe a bit much)
     ESPTouchGenerator *generator = [[ESPTouchGenerator alloc] initWithSsid:self._apSsid andApBssid:self._apBssid andApPassword:self._apPwd andInetAddrData:self._localInetAddrData andIsSsidHidden:self._isSsidHidden];
@@ -397,12 +395,10 @@
             return [self __getEsptouchResultList];
         }
     }
-
     if (!self._isInterrupt) {
         [self __sleep:[self._parameter getWaitUdpReceivingMillisecond]];
         [self __interrupt];
     }
-
     return [self __getEsptouchResultList];
 }
 

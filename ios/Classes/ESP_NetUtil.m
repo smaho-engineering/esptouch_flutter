@@ -19,7 +19,6 @@
 
 /**
  * get local ip v4 or nil
- *
  * @return local ip v4 or nil
  */
 + (NSString *)getLocalIPv4 {
@@ -28,7 +27,6 @@
 
 /**
  * get local ip v6 or nil
- *
  * @return local ip v6 or nil
  */
 + (NSString *)getLocalIPv6 {

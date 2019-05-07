@@ -17,44 +17,33 @@
 
 /**
  * Returns the current calculated checksum value.
- *
  * @return the checksum.
  */
 - (long)getValue;
 
 /**
- * Resets the checksum value applied before beginning calculations on a new
- * stream of data.
+ * Resets the checksum value applied before beginning calculations on a new stream of data.
  */
 - (void)reset;
 
 /**
  * Updates the checksum with the given bytes.
- *
- * @param buf
- *            the byte array from which to read the bytes.
- * @param off
- *            the initial position in {@code buf} to read the bytes from.
- * @param nbytes
- *            the number of bytes to read from {@code buf}.
+ * @param buf the byte array from which to read the bytes.
+ * @param off the initial position in {@code buf} to read the bytes from.
+ * @param nbytes the number of bytes to read from {@code buf}.
  */
 - (void)updateWithBuf:(Byte[])buf Off:(int)off Nbytes:(int)nbytes;
 
 /**
  * Updates the checksum with the given bytes.
- *
- * @param buf
- *            the byte array from which to read the bytes.
- * @param nbytes
- *            the number of bytes to read from {@code buf}.
+ * @param buf the byte array from which to read the bytes.
+ * @param nbytes the number of bytes to read from {@code buf}.
  */
 - (void)updateWithBuf:(Byte [])buf Nbytes:(int)nbytes;
 
 /**
  * Updates the checksum value with the given byte.
- *
- * @param value
- *            the byte to update the checksum with.
+ * @param value the byte to update the checksum with.
  */
 - (void)updateWithValue:(int)value;
 

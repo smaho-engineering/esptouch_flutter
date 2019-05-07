@@ -25,16 +25,12 @@
 
 + (unsigned int)intFromHexString:(NSString *)hexStr {
     unsigned int hexInt = 0;
-
     // Create scanner
     NSScanner *scanner = [NSScanner scannerWithString:hexStr];
-
     // Tell scanner to skip the # character
     //    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
-
     // Scan hex value
     [scanner scanHexInt:&hexInt];
-
     return hexInt;
 }
 
@@ -49,7 +45,6 @@
         high = 0;
         low = [self intFromHexString:[hexString substringWithRange:NSMakeRange(0, 1)]];
     }
-
     Byte bytes[] = {high, low};
     NSData *data = [[NSData alloc] initWithBytes:bytes length:2];
     return data;

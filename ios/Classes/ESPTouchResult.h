@@ -24,7 +24,6 @@
 
 /**
  * Constructor of EsptouchResult
- *
  * @param isSuc whether the esptouch task is executed suc
  * @param bssid the device's bssid
  * @param ipAddrData the device's ip address

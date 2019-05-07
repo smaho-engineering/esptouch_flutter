@@ -27,10 +27,7 @@
     if (ipAddrDataStr == nil) {
         ipAddrDataStr = [ESP_NetUtil descriptionInetAddr6ByData:self.ipAddrData];
     }
-    return [[NSString alloc] initWithFormat:@"[isSuc: %@,isCancelled: %@,bssid: %@,inetAddress: %@]", self.isSuc ? @"YES" : @"NO",
-                                            self.isCancelled ? @"YES" : @"NO"
-        , self.bssid
-        , ipAddrDataStr];
+    return [[NSString alloc] initWithFormat:@"[isSuc: %@,isCancelled: %@,bssid: %@,inetAddress: %@]", self.isSuc ? @"YES" : @"NO", self.isCancelled ? @"YES" : @"NO", self.bssid, ipAddrDataStr];
 }
 
 @end

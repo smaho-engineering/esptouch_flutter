@@ -28,7 +28,6 @@
             NSData *data = [ESP_ByteUtil genSpecBytesWithU16:gcU16_1[i]];
             [_gcBytes2 addObject:data];
         }
-
         // generate data code
         ESPDatumCode *dc = [[ESPDatumCode alloc] initWithSsid:apSsid andApBssid:apBssid andApPwd:apPwd andInetAddrData:ipAddrData andIsSsidHidden:isSsidHidden];
         NSData *dcData1 = [dc getU16s];

@@ -24,10 +24,7 @@
     NSArray *searchArray = preferIPv4 ?
         @[IOS_VPN @"/" IP_ADDR_IPv4, IOS_VPN @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6] :
         @[IOS_VPN @"/" IP_ADDR_IPv6, IOS_VPN @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4];
-
     NSDictionary *addresses = [self getIPAddresses];
-//    NSLog(@"addresses: %@", addresses);
-
     __block NSString *address;
     [searchArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
         address = addresses[key];
@@ -38,7 +35,6 @@
 
 + (NSDictionary *)getIPAddresses {
     NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithCapacity:8];
-
     // retrieve the current interfaces - returns 0 on success
     struct ifaddrs *interfaces;
     if (!getifaddrs(&interfaces)) {
