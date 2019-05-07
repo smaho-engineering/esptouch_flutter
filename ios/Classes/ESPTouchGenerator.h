@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ESPTouchGenerator : NSObject
-{
+@interface ESPTouchGenerator : NSObject {
 @private
     NSMutableArray *_gcBytes2;
 @private
@@ -29,18 +28,18 @@
  * @param isSsidHidden
  *            whether the Ap's ssid is hidden
  */
-- (id) initWithSsid: (NSData *)apSsid andApBssid: (NSData *)apBssid andApPassword: (NSData *)apPwd andInetAddrData: (NSData *)ipAddrData andIsSsidHidden: (BOOL)isSsidHidden;
+- (id)initWithSsid:(NSData *)apSsid andApBssid:(NSData *)apBssid andApPassword:(NSData *)apPwd andInetAddrData:(NSData *)ipAddrData andIsSsidHidden:(BOOL)isSsidHidden;
 
 /**
  * Get guide code by the format of byte[][]
  * @return guide code by the format of byte[][]
  */
-- (NSArray *) getGCBytes2;
+- (NSArray *)getGCBytes2;
 
 /**
  * Get data code by the format of byte[][]
  * @return data code by the format of byte[][]
  */
-- (NSArray *) getDCBytes2;
+- (NSArray *)getDCBytes2;
 
 @end

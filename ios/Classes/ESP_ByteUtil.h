@@ -19,7 +19,7 @@
  *            the unit8 to be converted
  * @return the byte of the unint8
  */
-+ (Byte) convertUint8toByte:(char) uint8;
++ (Byte)convertUint8toByte:(char)uint8;
 
 /**
  * Convert char into uint8( we treat char as uint8 )
@@ -28,7 +28,7 @@
  *            the byte to be converted
  * @return the UInt8(uint8)
  */
-+ (UInt8) convertByte2Uint8:(Byte) b;
++ (UInt8)convertByte2Uint8:(Byte)b;
 
 /**
  * Convert byte to Hex String
@@ -37,7 +37,7 @@
  *            the byte to be converted
  * @return the Hex String
  */
-+ (NSString *) convertByte2HexString:(Byte) b;
++ (NSString *)convertByte2HexString:(Byte)b;
 
 /**
  * Split uint8 to 2 bytes of high byte and low byte. e.g. 20 = 0x14 should
@@ -48,7 +48,7 @@
  * @return the high and low bytes be split, byte[0] is high and byte[1] is
  *         low
  */
-+ (NSData *) splitUint8To2Bytes: (UInt8) uint8;
++ (NSData *)splitUint8To2Bytes:(UInt8)uint8;
 
 /**
  * Combine 2 bytes (high byte and low byte) to one whole byte
@@ -59,7 +59,7 @@
  *            the low byte
  * @return the whole byte
  */
-+ (Byte) combine2bytesToOneWithHigh: (Byte) high andLow: (Byte) low;
++ (Byte)combine2bytesToOneWithHigh:(Byte)high andLow:(Byte)low;
 
 /**
  * Combine 2 bytes (high byte and low byte) to one UInt16
@@ -70,14 +70,14 @@
  *            the low byte
  * @return the UInt8
  */
-+ (UInt16) combine2bytesToU16WithHigh: (Byte) high andLow: (Byte) low;
++ (UInt16)combine2bytesToU16WithHigh:(Byte)high andLow:(Byte)low;
 
 /**
  * Generate the random byte to be sent
  *
  * @return the random byte
  */
-+ (Byte) randomByte;
++ (Byte)randomByte;
 
 /**
  * Generate the random byte to be sent
@@ -86,9 +86,9 @@
  *            the len presented by u8
  * @return the byte[] to be sent
  */
-+ (NSData *) randomBytes: (UInt8) len;
++ (NSData *)randomBytes:(UInt8)len;
 
-+ (NSData *) genSpecBytesWithU16: (UInt16) len;
++ (NSData *)genSpecBytesWithU16:(UInt16)len;
 
 /**
  * Generate the specific byte to be sent
@@ -96,9 +96,9 @@
  *            the len presented by byte
  * @return the byte[]
  */
-+ (NSData *) genSpecBytesWithU8:(Byte) len;
++ (NSData *)genSpecBytesWithU8:(Byte)len;
 
-+ (NSString *) parseBssid:(Byte[]) bssidBytes Offset: (int) offset Count: (int) count;
++ (NSString *)parseBssid:(Byte[])bssidBytes Offset:(int)offset Count:(int)count;
 
 /**
  * parse "24,-2,52,-102,-93,-60" to "18,fe,34,9a,a3,c4" parse the bssid from
@@ -110,19 +110,19 @@
  *            the len of bssidBytes
  * @return the String of bssid, e.g. 18fe349aa3c4
  */
-+ (NSString *) parseBssid:(Byte[]) bssidBytes Len: (int) len;
++ (NSString *)parseBssid:(Byte[])bssidBytes Len:(int)len;
 
 /**
  * @param string the string to be used
  * @return the Byte[] of string according to ESPTOUCH_NSStringEncoding
  */
-+ (NSData *) getBytesByNSString: (NSString *)string;
++ (NSData *)getBytesByNSString:(NSString *)string;
 
 /**
  * get hex string transformed by data
  * @param data the data to be transformed
  * @return the hex String transformed by data
  */
-+ (NSString *) getHexStringByData: (NSData *)data;
++ (NSString *)getHexStringByData:(NSData *)data;
 
 @end

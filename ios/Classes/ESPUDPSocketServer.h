@@ -10,17 +10,16 @@
 
 #define BUFFER_SIZE 64
 
-@interface ESPUDPSocketServer : NSObject
-{
-    @private
+@interface ESPUDPSocketServer : NSObject {
+@private
     Byte _buffer[BUFFER_SIZE];
 }
 
-@property (nonatomic, assign) int port;
+@property(nonatomic, assign) int port;
 
-- (void) close;
+- (void)close;
 
-- (void) interrupt;
+- (void)interrupt;
 
 /**
  * Set the socket timeout in milliseconds
@@ -28,21 +27,21 @@
  * @param timeout
  *            the timeout in milliseconds or 0 for no timeout.
  */
-- (void) setSocketTimeout: (int) timeout;
+- (void)setSocketTimeout:(int)timeout;
 
 /**
  * Receive one byte from the port
  *
  * @return one byte receive from the port or UINT8_MAX(it impossible receive it from the socket)
  */
-- (Byte) receiveOneByte4;
+- (Byte)receiveOneByte4;
 
-- (NSData *) receiveSpecLenBytes4: (int)len;
+- (NSData *)receiveSpecLenBytes4:(int)len;
 
-- (Byte) receiveOneByte6;
+- (Byte)receiveOneByte6;
 
-- (NSData *) receiveSpecLenBytes6:(int)len;
+- (NSData *)receiveSpecLenBytes6:(int)len;
 
-- (id) initWithPort: (int) port AndSocketTimeout: (int) socketTimeout;
+- (id)initWithPort:(int)port AndSocketTimeout:(int)socketTimeout;
 
 @end

@@ -9,17 +9,19 @@
 #import "ESPAES.h"
 
 
-@interface EsptouchTaskUtil : NSObject<ESPTouchDelegate>
+@interface EsptouchTaskUtil : NSObject <ESPTouchDelegate>
 
-@property (nonatomic, strong) NSCondition* _condition;
-@property (atomic, strong) ESPTouchTask* _esptouchTask;
-@property NSString* bssid;
-@property NSString* ssid;
-@property NSString* password;
+@property(nonatomic, strong) NSCondition *_condition;
+@property(atomic, strong) ESPTouchTask *_esptouchTask;
+@property NSString *bssid;
+@property NSString *ssid;
+@property NSString *password;
 @property int count;
 
-- (id) initWithBSSID: (NSString*) bssid andSSID:(NSString*)ssid andPassword:(NSString*)password andCount:(int)count;
+- (id)initWithBSSID:(NSString *)bssid andSSID:(NSString *)ssid andPassword:(NSString *)password andCount:(int)count;
+
 - (void)listen:(FlutterEventSink)sink;
+
 - (void)cancel;
 
 @end

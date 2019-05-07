@@ -13,20 +13,18 @@
 
 @implementation ESPGuideCode
 
-- (NSData *) getU16s
-{
+- (NSData *)getU16s {
     UInt16 guideU16s[GUIDE_CODE_LEN];
     guideU16s[0] = 515;
     guideU16s[1] = 514;
     guideU16s[2] = 513;
     guideU16s[3] = 512;
-    NSData* data = [[NSData alloc]initWithBytes:guideU16s length:GUIDE_CODE_LEN*2];
+    NSData *data = [[NSData alloc] initWithBytes:guideU16s length:GUIDE_CODE_LEN * 2];
     return data;
 }
 
-- (NSString *)description
-{
-    NSData* data = [self getU16s];
+- (NSString *)description {
+    NSData *data = [self getU16s];
     return [ESP_ByteUtil getHexStringByData:data];
 }
 

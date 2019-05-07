@@ -23,22 +23,21 @@
  * @author afunx
  *
  */
-@interface ESPDataCode : NSObject
-{
-    @private
+@interface ESPDataCode : NSObject {
+@private
     Byte _seqHeader;
-    @private
+@private
     Byte _dataHigh;
-    @private
+@private
     Byte _dataLow;
-    @private
+@private
     Byte _crcHigh;
-    @private
+@private
     Byte _crcLow;
 }
 
-- (NSData*) getBytes;
+- (NSData *)getBytes;
 
-- (id) initWithU8: (UInt8) u8 andIndex: (int) index;
+- (id)initWithU8:(UInt8)u8 andIndex:(int)index;
 
 @end

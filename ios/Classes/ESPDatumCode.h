@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ESPDatumCode : NSObject
-{
-    @private
+@interface ESPDatumCode : NSObject {
+@private
     NSMutableArray *_dataCodes;
 }
 
@@ -29,10 +28,10 @@
  *            whether the Ap's ssid is hidden
  *
  */
-- (id) initWithSsid: (NSData *) apSsid andApBssid: (NSData *) apBssid andApPwd: (NSData*) apPwd andInetAddrData: (NSData *) ipAddrData andIsSsidHidden: (BOOL) isSsidHidden;
+- (id)initWithSsid:(NSData *)apSsid andApBssid:(NSData *)apBssid andApPwd:(NSData *)apPwd andInetAddrData:(NSData *)ipAddrData andIsSsidHidden:(BOOL)isSsidHidden;
 
-- (NSData *) getBytes;
+- (NSData *)getBytes;
 
-- (NSData *) getU16s;
+- (NSData *)getU16s;
 
 @end

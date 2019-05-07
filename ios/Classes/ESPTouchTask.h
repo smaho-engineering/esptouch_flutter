@@ -17,7 +17,7 @@
 
 @interface ESPTouchTask : NSObject
 
-@property (atomic,assign) BOOL isCancelled;
+@property(atomic, assign) BOOL isCancelled;
 
 - (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes;
 
@@ -31,12 +31,12 @@
  * @param apPwd
  *            the Ap's password
  */
-- (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd;
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd;
 
 /**
  * Deprecated
  */
-- (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd andIsSsidHiden: (BOOL) isSsidHidden __deprecated_msg("Use initWithApSsid:(NSString *) andApBssid:(NSString *) andApPwd:(NSString *) instead.");
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andIsSsidHiden:(BOOL)isSsidHidden __deprecated_msg("Use initWithApSsid:(NSString *) andApBssid:(NSString *) andApPwd:(NSString *) instead.");
 
 /**
  * Constructor of EsptouchTask
@@ -50,7 +50,7 @@
  * @param timeoutMillisecond
  * 			  millisecond of total timeout (it should be >= 15000+6000)
  */
-- (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd andTimeoutMillisecond: (int) timeoutMillisecond;
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andTimeoutMillisecond:(int)timeoutMillisecond;
 
 /**
  * Constructor of EsptouchTask
@@ -66,12 +66,12 @@
  * @param timeoutMillisecond
  * 			  millisecond of total timeout (it should be >= 15000+6000)
  */
-- (id) initWithApSsid: (NSString *)apSsid andApBssid: (NSString *) apBssid andApPwd: (NSString *)apPwd andIsSsidHiden: (BOOL) isSsidHidden andTimeoutMillisecond: (int) timeoutMillisecond  __deprecated_msg("Use initWithApSsid:(NSString *) andApBssid:(NSString *) andApPwd:(NSString *) andTimeoutMillisecond:(int) instead.");
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andIsSsidHiden:(BOOL)isSsidHidden andTimeoutMillisecond:(int)timeoutMillisecond  __deprecated_msg("Use initWithApSsid:(NSString *) andApBssid:(NSString *) andApPwd:(NSString *) andTimeoutMillisecond:(int) instead.");
 
 /**
  * Interrupt the Esptouch Task when User tap back or close the Application.
  */
-- (void) interrupt;
+- (void)interrupt;
 
 /**
  * Note: !!!Don't call the task at UI Main Thread
@@ -80,7 +80,7 @@
  *
  * @return the ESPTouchResult
  */
-- (ESPTouchResult*) executeForResult;
+- (ESPTouchResult *)executeForResult;
 
 /**
  * Note: !!!Don't call the task at UI Main Thread
@@ -99,17 +99,17 @@
  * @return the NSArray of EsptouchResult
  * @throws RuntimeException
  */
-- (NSArray*) executeForResults:(int) expectTaskResultCount;
+- (NSArray *)executeForResults:(int)expectTaskResultCount;
 
 /**
  * set the esptouch delegate, when one device is connected to the Ap, it will be called back
  * @param esptouchDelegate when one device is connected to the Ap, it will be called back
  */
-- (void) setEsptouchDelegate: (NSObject<ESPTouchDelegate> *) esptouchDelegate;
+- (void)setEsptouchDelegate:(NSObject <ESPTouchDelegate> *)esptouchDelegate;
 
 /**
  * Set boradcast or multicast when post config info
  * @param broadcast YES is boradcast, NO is multicast
  */
-- (void) setPackageBroadcast: (BOOL) broadcast;
+- (void)setPackageBroadcast:(BOOL)broadcast;
 @end

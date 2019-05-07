@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ESPViewController : UIViewController<UITextFieldDelegate>
+@interface ESPViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *ssidLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bssidLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *broadcastSC;
+@property(weak, nonatomic) IBOutlet UILabel *ssidLabel;
+@property(weak, nonatomic) IBOutlet UILabel *bssidLabel;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *broadcastSC;
 
 @end

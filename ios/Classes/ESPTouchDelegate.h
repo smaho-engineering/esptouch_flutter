@@ -19,6 +19,6 @@
  * @param result
  *            the Esptouch result
  */
--(void) onEsptouchResultAddedWithResult: (ESPTouchResult *) result;
+- (void)onEsptouchResultAddedWithResult:(ESPTouchResult *)result;
 
 @end

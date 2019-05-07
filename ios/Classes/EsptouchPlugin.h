@@ -1,7 +1,7 @@
 #import <Flutter/Flutter.h>
 
-@interface EsptouchPlugin : NSObject<FlutterPlugin>
+@interface EsptouchPlugin : NSObject <FlutterPlugin>
 @end
 
-@interface EsptouchResultsStreamHandler: NSObject<FlutterStreamHandler>
+@interface EsptouchResultsStreamHandler : NSObject <FlutterStreamHandler>
 @end

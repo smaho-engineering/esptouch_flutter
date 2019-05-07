@@ -11,11 +11,9 @@
 
 @implementation ESPTouchResult
 
-- (id) initWithIsSuc: (BOOL) isSuc andBssid: (NSString *) bssid andInetAddrData: (NSData *) ipAddrData
-{
+- (id)initWithIsSuc:(BOOL)isSuc andBssid:(NSString *)bssid andInetAddrData:(NSData *)ipAddrData {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         self.isSuc = isSuc;
         self.bssid = bssid;
         self.isCancelled = NO;
@@ -24,16 +22,15 @@
     return self;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
     NSString *ipAddrDataStr = [ESP_NetUtil descriptionInetAddr4ByData:self.ipAddrData];
-    if (ipAddrDataStr==nil) {
+    if (ipAddrDataStr == nil) {
         ipAddrDataStr = [ESP_NetUtil descriptionInetAddr6ByData:self.ipAddrData];
     }
-    return [[NSString alloc]initWithFormat:@"[isSuc: %@,isCancelled: %@,bssid: %@,inetAddress: %@]",self.isSuc? @"YES":@"NO",
-            self.isCancelled? @"YES":@"NO"
-            ,self.bssid
-            ,ipAddrDataStr];
+    return [[NSString alloc] initWithFormat:@"[isSuc: %@,isCancelled: %@,bssid: %@,inetAddress: %@]", self.isSuc ? @"YES" : @"NO",
+                                            self.isCancelled ? @"YES" : @"NO"
+        , self.bssid
+        , ipAddrDataStr];
 }
 
 @end
