@@ -33,15 +33,14 @@
         withBroadcast:packet
     ];
     [taskUtil listen:eventSink];
-    // self._taskUtil = taskUtil;
+    self.taskUtil = taskUtil;
     return nil;
 }
 
 - (FlutterError *)onCancelWithArguments:(id)arguments {
-    // TODO(smaho): Make sure we can cancel tasks properly from Dart/Flutter
-    // if (self._taskUtil != nil) {
-    //   [self._taskUtil cancel];
-    // }
+    if (self.taskUtil != nil) {
+        [self.taskUtil cancel];
+    }
     return nil;
 }
 

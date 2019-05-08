@@ -11,6 +11,8 @@
 
 @interface EsptouchTaskUtil : NSObject <ESPTouchDelegate>
 
+// TODO(smaho): Do we need to specify atomic/nonatomic and strong?
+// Atomic is the default. Strong might not be necessary
 @property(nonatomic, strong) NSCondition *_condition;
 @property(atomic, strong) ESPTouchTask *_esptouchTask;
 @property NSString *bssid;

@@ -58,7 +58,6 @@ FlutterEventSink _eventSink;
 }
 
 - (void)cancel {
-    // TODO(smaho): make sure we cancel tasks properly
     [self._condition lock];
     if (self._esptouchTask != nil) {
         [self._esptouchTask interrupt];
