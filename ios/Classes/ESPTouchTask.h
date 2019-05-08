@@ -88,8 +88,8 @@
 - (void)setEsptouchDelegate:(NSObject <ESPTouchDelegate> *)esptouchDelegate;
 
 /**
- * Set boradcast or multicast when post config info
- * @param broadcast YES is boradcast, NO is multicast
+ * Set broadcast or multicast when post config info
+ * @param broadcast YES is broadcast, NO is multicast
  */
 - (void)setPackageBroadcast:(BOOL)broadcast;
 @end

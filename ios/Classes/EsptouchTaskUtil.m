@@ -21,12 +21,17 @@ FlutterEventSink _eventSink;
     });
 }
 
-- (id)initWithBSSID:(NSString *)bssid andSSID:(NSString *)ssid andPassword:(NSString *)password andCount:(int)count {
+- (id)initWithBSSID:(NSString *)bssid
+            andSSID:(NSString *)ssid
+        andPassword:(NSString *)password
+           andCount:(int)count
+      withBroadcast:(BOOL) packet {
     self = [super init];
     self.bssid = bssid;
     self.ssid = ssid;
     self.password = password;
     self.count = count;
+    self.packet = packet;
     return self;
 }
 
@@ -41,7 +46,7 @@ FlutterEventSink _eventSink;
     self._esptouchTask = [[ESPTouchTask alloc] initWithApSsid:self.ssid andApBssid:self.bssid andApPwd:self.password];
     [self._esptouchTask setEsptouchDelegate:self];
     // TODO(smaho): Set package broadcast based on Flutter plugin's parameter
-    [self._esptouchTask setPackageBroadcast:TRUE];
+    [self._esptouchTask setPackageBroadcast:self.packet];
     [self._condition unlock];
     // TODO(smaho): Use QoS. Read docs for dispatch_get_global_queue's identifier parameter
     // > It is recommended to use quality of service class values to identify the

@@ -21,7 +21,17 @@
     NSString *bssid = args[@"bssid"];
     NSString *ssid = args[@"ssid"];
     NSString *password = args[@"password"];
-    EsptouchTaskUtil *taskUtil = [[EsptouchTaskUtil alloc] initWithBSSID:bssid andSSID:ssid andPassword:password andCount:5];
+    // TODO(smaho): packet is a bool value, should pass it as such
+    // This requires Dart+Java+ObjC refactors as it's the plugin's interface
+    BOOL packet = [args[@"packet"] isEqual:@"1"];
+    NSLog(@"packet argument value is %d", packet);
+    EsptouchTaskUtil *taskUtil = [[EsptouchTaskUtil alloc]
+        initWithBSSID:bssid
+              andSSID:ssid
+          andPassword:password
+             andCount:5
+        withBroadcast:packet
+    ];
     [taskUtil listen:eventSink];
     // self._taskUtil = taskUtil;
     return nil;

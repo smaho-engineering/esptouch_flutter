@@ -16,9 +16,14 @@
 @property NSString *bssid;
 @property NSString *ssid;
 @property NSString *password;
+@property BOOL packet;
 @property int count;
 
-- (id)initWithBSSID:(NSString *)bssid andSSID:(NSString *)ssid andPassword:(NSString *)password andCount:(int)count;
+- (id)initWithBSSID:(NSString *)bssid
+            andSSID:(NSString *)ssid
+        andPassword:(NSString *)password
+           andCount:(int)count
+      withBroadcast:(BOOL)packet;
 
 - (void)listen:(FlutterEventSink)sink;
 
