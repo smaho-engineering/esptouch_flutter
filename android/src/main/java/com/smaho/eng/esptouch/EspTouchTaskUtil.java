@@ -61,7 +61,7 @@ public class EspTouchTaskUtil {
               espTouchTaskUtil.eventSink.error(msg, msg, null);
               return;
             }
-            Map<String, String> result = new HashMap();
+            Map<String, String> result = new HashMap<>();
             result.put("bssid", esptouchResult.getBssid());
             result.put("ip", esptouchResult.getInetAddress().getHostAddress());
             espTouchTaskUtil.eventSink.success(result);

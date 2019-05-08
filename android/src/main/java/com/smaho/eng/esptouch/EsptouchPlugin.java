@@ -3,7 +3,6 @@ package com.smaho.eng.esptouch;
 import android.content.Context;
 import android.util.Log;
 
-import com.espressif.iot.esptouch.EsptouchTask;
 import com.espressif.iot.esptouch.task.EsptouchTaskParameter;
 
 import java.util.Map;
@@ -22,7 +21,7 @@ public class EsptouchPlugin implements EventChannel.StreamHandler {
   }
 
   private final Context context;
-  private EspTouchTaskUtil task;
+  private EspTouchTaskUtil taskUtil;
 
   private EsptouchPlugin(Context context) {
     this.context = context;
@@ -56,23 +55,22 @@ public class EsptouchPlugin implements EventChannel.StreamHandler {
     String ssid = (String) map.get("ssid");
     String bssid = (String) map.get("bssid");
     String password = (String) map.get("password");
+    // TODO(smaho): packet is a bool value, should pass it as such
     String packet = (String) map.get("packet");
     Map<String, Integer> taskParameterMap = (Map<String, Integer>) map.get("taskParameter");
     Log.d(TAG, String.format("Received stream configuration arguments: SSID: %s, BBSID: %s, Password: %s, Packet: %s, Task parameter: %s", ssid, bssid, password, packet, taskParameterMap));
-    // TODO: Add builder parameters that can be null or missing,too.
-    // Should probably add this in a separate method: accepts a map with values, return a builder config
     EsptouchTaskParameter taskParameter = buildTaskParameter(taskParameterMap);
-    Log.d(TAG, String.format("Converted task parameter from map %s to EsptouchTaskParameter %s.", taskParameterMap, taskParameter));
-    task = new EspTouchTaskUtil(context, ssid, bssid, password, packet.equals("1"), taskParameter);
-    task.listen(eventSink);
+    Log.d(TAG, String.format("Converted taskUtil parameter from map %s to EsptouchTaskParameter %s.", taskParameterMap, taskParameter));
+    taskUtil = new EspTouchTaskUtil(context, ssid, bssid, password, packet.equals("1"), taskParameter);
+    taskUtil.listen(eventSink);
   }
 
   @Override
   public void onCancel(Object o) {
     Log.d(TAG, "Cancelling stream with configuration arguments" + o);
-    if (task != null) {
+    if (taskUtil != null) {
       Log.d(TAG, "Task existed, cancelling manually");
-      task.cancel();
+      taskUtil.cancel();
     }
   }
 }
