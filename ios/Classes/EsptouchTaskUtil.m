@@ -5,7 +5,7 @@
 #import "ESP_NetUtil.h"
 #import "ESPTouchDelegate.h"
 #import "ESPAES.h"
-// Double check which imports are actually needed
+// TODO(smaho): Double check which imports are actually needed
 
 @implementation EsptouchTaskUtil
 
@@ -14,10 +14,10 @@ FlutterEventSink _eventSink;
 - (void)onEsptouchResultAddedWithResult:(ESPTouchResult *)result {
     NSString *bssid = result.bssid;
     NSString *ip = [ESP_NetUtil descriptionInetAddr4ByData:result.ipAddrData];
-    NSDictionary *resultDictionairy = @{@"bssid": bssid, @"ip": ip};
-    // _eventSink(resultDictionairy);
+    NSDictionary *resultDictionary = @{@"bssid": bssid, @"ip": ip};
+    // TODO(smaho): Verify is main queue would not be better. Or is it the main queue?
     dispatch_async(dispatch_get_current_queue(), ^{
-        _eventSink(resultDictionairy);
+        _eventSink(resultDictionary);
     });
 }
 
@@ -37,17 +37,20 @@ FlutterEventSink _eventSink;
     NSLog(@"password %@", self.password);
     _eventSink = eventSink;
     [self._condition lock];
+    // TODO(smaho): Handle all supported task parameters
     self._esptouchTask = [[ESPTouchTask alloc] initWithApSsid:self.ssid andApBssid:self.bssid andApPwd:self.password];
     [self._esptouchTask setEsptouchDelegate:self];
+    // TODO(smaho): Set package broadcast based on Flutter plugin's parameter
     [self._esptouchTask setPackageBroadcast:TRUE];
     [self._condition unlock];
+    // TODO(smaho): Use QoS. Read docs for dispatch_get_global_queue's identifier parameter
+    // > It is recommended to use quality of service class values to identify the
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        NSArray *esptouchResults = [self._esptouchTask executeForResults:5];
-        NSLog(@"ESPViewController executeForResult() result is: %@", esptouchResults);
+        NSArray *results = [self._esptouchTask executeForResults:5];
+        NSLog(@"ESPViewController executeForResult() result is: %@", results);
     });
 }
-
 
 - (void)cancel {
     // TODO(smaho): make sure we cancel tasks properly
