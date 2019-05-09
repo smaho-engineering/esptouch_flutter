@@ -1,10 +1,4 @@
 #import "EsptouchTaskUtil.h"
-#import "ESPViewController.h"
-#import "ESPTouchTask.h"
-#import "ESPTouchResult.h"
-#import "ESP_NetUtil.h"
-#import "ESPTouchDelegate.h"
-#import "ESPAES.h"
 // TODO(smaho): Double check which imports are actually needed
 
 @implementation EsptouchTaskUtil
@@ -24,26 +18,28 @@ FlutterEventSink _eventSink;
 - (id)initWithBSSID:(NSString *)bssid
             andSSID:(NSString *)ssid
         andPassword:(NSString *)password
-           andCount:(int)count
-      withBroadcast:(BOOL) packet {
+  andTaskParameters:(ESPTaskParameter *)taskParameter
+      withBroadcast:(BOOL)packet {
     self = [super init];
     self.bssid = bssid;
     self.ssid = ssid;
     self.password = password;
-    self.count = count;
     self.packet = packet;
+    self.taskParameter = taskParameter;
     return self;
 }
 
 - (void)listen:(FlutterEventSink)eventSink {
-    NSLog(@"Listening with parameters:");
-    NSLog(@"bssid %@", self.bssid);
-    NSLog(@"ssid %@", self.ssid);
-    NSLog(@"password %@", self.password);
     _eventSink = eventSink;
     [self._condition lock];
     // TODO(smaho): Handle all supported task parameters
-    self._esptouchTask = [[ESPTouchTask alloc] initWithApSsid:self.ssid andApBssid:self.bssid andApPwd:self.password];
+    self._esptouchTask = [[ESPTouchTask alloc]
+        initWithApSsid:self.ssid
+            andApBssid:self.bssid
+              andApPwd:self.password
+                andAES:nil
+      andTaskParameter:self.taskParameter
+    ];
     [self._esptouchTask setEsptouchDelegate:self];
     // TODO(smaho): Set package broadcast based on Flutter plugin's parameter
     [self._esptouchTask setPackageBroadcast:self.packet];

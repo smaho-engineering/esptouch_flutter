@@ -1,5 +1,4 @@
 #import "EsptouchPlugin.h"
-#import "EsptouchTaskUtil.h"
 
 @implementation EsptouchPlugin
 
@@ -16,6 +15,26 @@
 
 @implementation EsptouchResultsStreamHandler
 
+- (ESPTaskParameter *)buildTaskParameter:(NSDictionary *)d {
+    // TODO(smaho): Dart does send this too: d[@"esptouchResultIpLen"];
+    return [[ESPTaskParameter alloc]
+        initWithIntervalGuideCodeMillisecond:[d[@"intervalGuideCodeMillisecond"] intValue]
+                 intervalDataCodeMillisecond:[d[@"intervalDataCodeMillisecond"] intValue]
+                 timeoutGuideCodeMillisecond:[d[@"timeoutGuideCodeMillisecond"] intValue]
+                  timeoutDataCodeMillisecond:[d[@"timeoutDataCodeMillisecond"] intValue]
+                             totalRepeatTime:[d[@"totalRepeatTime"] intValue]
+                        esptouchResultOneLen:[d[@"esptouchResultOneLen"] intValue]
+                        esptouchResultMacLen:[d[@"esptouchResultMacLen"] intValue]
+                               portListening:[d[@"portListening"] intValue]
+                                  targetPort:[d[@"targetPort"] intValue]
+                 waitUdpReceivingMillisecond:[d[@"waitUdpReceivingMillisecond"] intValue]
+                   waitUdpSendingMillisecond:[d[@"waitUdpSendingMillisecond"] intValue]
+                  thresholdSucBroadcastCount:[d[@"thresholdSucBroadcastCount"] intValue]
+                       expectTaskResultCount:[d[@"expectTaskResultCount"] intValue]
+    ];
+
+}
+
 - (FlutterError *)onListenWithArguments:(id)arguments eventSink:(FlutterEventSink)eventSink {
     NSDictionary *args = arguments;
     NSString *bssid = args[@"bssid"];
@@ -24,12 +43,13 @@
     // TODO(smaho): packet is a bool value, should pass it as such
     // This requires Dart+Java+ObjC refactors as it's the plugin's interface
     BOOL packet = [args[@"packet"] isEqual:@"1"];
-    NSLog(@"packet argument value is %d", packet);
+    NSDictionary *taskParameterArgs = args[@"taskParameter"];
+    ESPTaskParameter *taskParameter = [self buildTaskParameter:taskParameterArgs];
     EsptouchTaskUtil *taskUtil = [[EsptouchTaskUtil alloc]
         initWithBSSID:bssid
               andSSID:ssid
           andPassword:password
-             andCount:5
+    andTaskParameters:taskParameter
         withBroadcast:packet
     ];
     [taskUtil listen:eventSink];

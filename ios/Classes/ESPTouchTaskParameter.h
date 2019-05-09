@@ -10,6 +10,20 @@
 
 @interface ESPTaskParameter : NSObject
 
+- (id)initWithIntervalGuideCodeMillisecond:(int)intervalGuideCodeMillisecond
+               intervalDataCodeMillisecond:(int)intervalDataCodeMillisecond
+               timeoutGuideCodeMillisecond:(int)timeoutGuideCodeMillisecond
+                timeoutDataCodeMillisecond:(int)timeoutDataCodeMillisecond
+                           totalRepeatTime:(int)totalRepeatTime
+                      esptouchResultOneLen:(int)esptouchResultOneLen
+                      esptouchResultMacLen:(int)esptouchResultMacLen
+                             portListening:(int)portListening
+                                targetPort:(int)targetPort
+               waitUdpReceivingMillisecond:(int)waitUdpReceivingMillisecond
+                 waitUdpSendingMillisecond:(int)waitUdpSendingMillisecond
+                thresholdSucBroadcastCount:(int)thresholdSucBroadcastCount
+                     expectTaskResultCount:(int)expectTaskResultCount;
+
 /**
  * get interval millisecond for guide code(the time between each guide code sending)
  * @return interval millisecond for guide code(the time between each guide code sending)

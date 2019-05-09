@@ -7,6 +7,7 @@
 #import "ESP_NetUtil.h"
 #import "ESPTouchDelegate.h"
 #import "ESPAES.h"
+#import "ESPTouchTaskParameter.h"
 
 
 @interface EsptouchTaskUtil : NSObject <ESPTouchDelegate>
@@ -18,13 +19,14 @@
 @property NSString *bssid;
 @property NSString *ssid;
 @property NSString *password;
+@property ESPTaskParameter *taskParameter;
 @property BOOL packet;
 @property int count;
 
 - (id)initWithBSSID:(NSString *)bssid
             andSSID:(NSString *)ssid
         andPassword:(NSString *)password
-           andCount:(int)count
+    andTaskParameters:(ESPTaskParameter *)taskParameter
       withBroadcast:(BOOL)packet;
 
 - (void)listen:(FlutterEventSink)sink;

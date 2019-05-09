@@ -38,10 +38,55 @@
 
 static int _datagramCount = 0;
 
+- (id)initWithIntervalGuideCodeMillisecond:(int)intervalGuideCodeMillisecond
+               intervalDataCodeMillisecond:(int)intervalDataCodeMillisecond
+               timeoutGuideCodeMillisecond:(int)timeoutGuideCodeMillisecond
+                timeoutDataCodeMillisecond:(int)timeoutDataCodeMillisecond
+                           totalRepeatTime:(int)totalRepeatTime
+                      esptouchResultOneLen:(int)esptouchResultOneLen
+                      esptouchResultMacLen:(int)esptouchResultMacLen
+                             portListening:(int)portListening
+                                targetPort:(int)targetPort
+               waitUdpReceivingMillisecond:(int)waitUdpReceivingMillisecond
+                 waitUdpSendingMillisecond:(int)waitUdpSendingMillisecond
+                thresholdSucBroadcastCount:(int)thresholdSucBroadcastCount
+                     expectTaskResultCount:(int)expectTaskResultCount {
+    self = [super init];
+    if (self) {
+        self.intervalGuideCodeMillisecond = intervalGuideCodeMillisecond;
+        self.intervalDataCodeMillisecond = intervalDataCodeMillisecond;
+        self.timeoutGuideCodeMillisecond = timeoutGuideCodeMillisecond;
+        self.timeoutDataCodeMillisecond = timeoutDataCodeMillisecond;
+        self.timeoutTotalCodeMillisecond = self.timeoutGuideCodeMillisecond + self.timeoutDataCodeMillisecond;
+        self.totalRepeatTime = totalRepeatTime;
+        self.esptouchResultOneLen = esptouchResultOneLen;
+        self.esptouchResultMacLen = esptouchResultMacLen;
+        // TODO(smaho): no esptouchResultIpLen in iOS but there is on Android
+        self.esptouchResultIpLen4 = 4;
+        self.esptouchResultIpLen6 = 16;
+        // self.esptouchResultIpLen = esptouchResultIpLen;
+        self.esptouchResultTotalLen4 = self.esptouchResultOneLen + self.esptouchResultMacLen + self.esptouchResultIpLen4;
+        self.esptouchResultTotalLen6 = self.esptouchResultOneLen + self.esptouchResultMacLen + self.esptouchResultIpLen6;
+        // TODO(smaho): Again: Android does not have portListening4 and portListening6, only portListening.
+        self.portListening4 = portListening;
+        self.portListening6 = 0;
+        self.targetPort4 = targetPort;
+        self.targetPort6 = targetPort;
+        self.waitUdpReceivingMillisecond = waitUdpReceivingMillisecond;
+        self.waitUdpSendingMillisecond = waitUdpSendingMillisecond;
+        self.thresholdSucBroadcastCount = thresholdSucBroadcastCount;
+        self.expectTaskResultCount = expectTaskResultCount;
+        self.isIPv4Supported0 = YES;
+        self.isIPv6Supported0 = YES;
+    } else {
+        NSLog(@"ERROR: Could not init ESPTaskParameter");
+    }
+    return self;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
-        // TODO(smaho): we need to be able to make this configurable
         self.intervalGuideCodeMillisecond = 8;
         self.intervalDataCodeMillisecond = 8;
         self.timeoutGuideCodeMillisecond = 2000;
@@ -50,6 +95,7 @@ static int _datagramCount = 0;
         self.totalRepeatTime = 1;
         self.esptouchResultOneLen = 1;
         self.esptouchResultMacLen = 6;
+        // TODO(smaho): This is strange.... In the Android code, I don't remember having these IpLen values
         self.esptouchResultIpLen4 = 4;
         self.esptouchResultIpLen6 = 16;
         self.esptouchResultTotalLen4 = 1 + 6 + 4;

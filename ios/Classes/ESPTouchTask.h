@@ -10,6 +10,7 @@
 #import "ESPTouchResult.h"
 #import "ESPTouchDelegate.h"
 #import "ESPAES.h"
+#import "ESPTouchTaskParameter.h"
 
 #define ESPTOUCH_VERSION    @"v0.3.7.0"
 
@@ -18,6 +19,8 @@
 @interface ESPTouchTask : NSObject
 
 @property(atomic, assign) BOOL isCancelled;
+
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes andTaskParameter:(ESPTaskParameter *) taskParameter;
 
 - (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes;
 

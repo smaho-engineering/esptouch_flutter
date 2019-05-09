@@ -60,7 +60,7 @@
 
 @implementation ESPTouchTask
 
-- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes {
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes andTaskParameter:(ESPTaskParameter *) taskParameter {
     NSLog(@"Welcome Esptouch %@", ESPTOUCH_VERSION);
     if (apSsid == nil || [apSsid isEqualToString:@""]) {
         perror("ESPTouchTask initWithApSsid() apSsid shouldn't be null or empty");
@@ -84,8 +84,7 @@
             self._apPwd = [aes AES128EncryptData:[ESP_ByteUtil getBytesByNSString:apPwd]];
         }
         self._apBssid = [ESP_NetUtil parseBssid2bytes:apBssid];
-        self._parameter = [[ESPTaskParameter alloc] init];
-
+        self._parameter = taskParameter;
         // check whether IPv4 and IPv6 is supported
         NSString *localInetAddr4 = [ESP_NetUtil getLocalIPv4];
         if (![ESP_NetUtil isIPv4PrivateAddr:localInetAddr4]) {
@@ -94,7 +93,6 @@
         NSString *localInetAddr6 = [ESP_NetUtil getLocalIPv6];
         [self._parameter setIsIPv4Supported:localInetAddr4 != nil];
         [self._parameter setIsIPv6Supported:localInetAddr6 != nil];
-
         // create udp client and udp server
         self._client = [[ESPUDPSocketClient alloc] init];
         self._server = [[ESPUDPSocketServer alloc] initWithPort:[self._parameter getPortListening]
@@ -104,7 +102,6 @@
         if (DEBUG_ON) {
             NSLog(@"ESPTouchTask app server port is %d", self._server.port);
         }
-
         if (localInetAddr4 != nil) {
             self._localInetAddrData = [ESP_NetUtil getLocalInetAddress4ByAddr:localInetAddr4];
         } else {
@@ -116,7 +113,6 @@
             // for ESPTouchGenerator only receive 4 bytes for local address no matter IPv4 or IPv6
             NSLog(@"ESPTouchTask executeForResult() localInetAddr: %@", [ESP_NetUtil descriptionInetAddr4ByData:self._localInetAddrData]);
         }
-
         self._isSuc = NO;
         self._isInterrupt = NO;
         self._isWakeUp = NO;
@@ -128,6 +124,11 @@
         self._esptouchResultArrayCondition = [[NSCondition alloc] init];
     }
     return self;
+}
+
+- (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd andAES:(ESPAES *)aes {
+    ESPTaskParameter *taskParameter = [[ESPTaskParameter alloc] init];
+    return [self initWithApSsid:apSsid andApBssid:apBssid andApPwd:apPwd andAES:aes andTaskParameter:taskParameter];
 }
 
 - (id)initWithApSsid:(NSString *)apSsid andApBssid:(NSString *)apBssid andApPwd:(NSString *)apPwd {
