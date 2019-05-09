@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:esptouch/esptouch.dart';
 import 'package:esptouch_example/task_parameter_details.dart';
 import 'package:esptouch_example/wifi_info.dart';
@@ -273,11 +275,22 @@ class TaskRoute extends StatefulWidget {
 
 class TaskRouteState extends State<TaskRoute> {
   Stream<ESPTouchResult> _stream;
+  StreamSubscription<ESPTouchResult> _streamSubscription;
 
   @override
   void initState() {
     _stream = widget.task.execute();
+    _streamSubscription = _stream.listen((value) {
+      // TODO(smaho): Don't use StreamBuilder and listen in the same example
+      print('Received value in TaskRouteState $value');
+    });
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
   }
 
   Widget waitingState(BuildContext context) {
@@ -370,7 +383,8 @@ class TaskRouteState extends State<TaskRoute> {
             if (!snapshot.hasData) {
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),
+                  valueColor:
+                      AlwaysStoppedAnimation(Theme.of(context).primaryColor),
                 ),
               );
             }
