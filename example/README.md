@@ -1,4 +1,4 @@
-# Example `esptouch_flutter` plugin
+# Examples for using the `esptouch_flutter` plugin
 
 The example demonstrates how to use the [`esptouch_flutter`](https://pub.dev/packages/esptouch_flutter) plugin.
 You can read the full source code on GitHub: [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
@@ -13,6 +13,14 @@ The example app lets you configure
 * ... many more.
 
 You can use current network SSID/BSSID or enter it manually (getting wifi info is restricted on the platforms, so sometimes it's necessary to enter them manually).
+
+You can run the example app by:
+
+```
+flutter packages get
+cd example
+flutter run
+```
 
 ### Code snippets
 

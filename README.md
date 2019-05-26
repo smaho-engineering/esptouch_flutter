@@ -7,7 +7,7 @@ This package provides a high customizability to the ESP Touch tasks and an idiom
 
 Custom task parameters lets the users of this plugin change how long the task runs, you could set it to hours, if this is what your workflow requires.
 
-If you enjoy using this, I'd really appreciate a [**star on GitHub!**](https://github.com/smaho-engineering/esptouch_flutter).
+If you enjoy using this, I'd really appreciate a [**star on GitHub!**](https://github.com/smaho-engineering/esptouch_flutter)
 
 ## Usage
 

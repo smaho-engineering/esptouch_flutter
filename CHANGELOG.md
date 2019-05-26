@@ -1,3 +1,7 @@
+## 0.1.2
+
+More docs improvements. Add missing license.
+
 ## 0.1.1
 
 Improve documentation.
