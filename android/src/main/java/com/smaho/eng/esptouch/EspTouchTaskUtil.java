@@ -34,7 +34,7 @@ public class EspTouchTaskUtil {
     private final EspTouchTaskUtil espTouchTaskUtil;
     private IEsptouchTask esptouchTask;
 
-    public EspTouchAsyncTask(EspTouchTaskUtil espTouchTaskUtil) {
+    EspTouchAsyncTask(EspTouchTaskUtil espTouchTaskUtil) {
       this.espTouchTaskUtil = espTouchTaskUtil;
     }
 
@@ -73,7 +73,7 @@ public class EspTouchTaskUtil {
       return esptouchTask.executeForResults(count);
     }
 
-    public void cancelEsptouch() {
+    void cancelEsptouch() {
       Log.d(TAG, "cancelEsptouch");
       cancel(true);
       if (esptouchTask != null) {
@@ -84,7 +84,7 @@ public class EspTouchTaskUtil {
   }
 
 
-  public EspTouchTaskUtil(
+  EspTouchTaskUtil(
       Context context,
       String ssid,
       String bssid,
@@ -101,13 +101,13 @@ public class EspTouchTaskUtil {
     this.taskParameter = taskParameter;
   }
 
-  public void listen(final EventChannel.EventSink eventSink) {
+  void listen(final EventChannel.EventSink eventSink) {
     this.eventSink = eventSink;
     asyncTask = new EspTouchAsyncTask(this);
     asyncTask.execute();
   }
 
-  public void cancel() {
+  void cancel() {
     Log.d(TAG, "cancel");
     asyncTask.cancelEsptouch();
   }

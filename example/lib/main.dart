@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:esptouch/esptouch.dart';
 import 'package:esptouch_example/task_parameter_details.dart';
 import 'package:esptouch_example/wifi_info.dart';
+import 'package:esptouch_flutter/esptouch_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

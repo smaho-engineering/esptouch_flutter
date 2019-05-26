@@ -1,34 +1,129 @@
 # `esptouch`
 
-Flutter plugin package which contains an API for ESP-Touch written in Dart combined with platform-specific implementation for Android using Java and iOS using Objective-C.
+Flutter plugin package which contains an API for ESP-Touch written in Dart combined with
+platform-specific implementation for Android using Java and iOS using Objective-C.
 
-The original [iOS](https://github.com/EspressifApp/EsptouchForIOS) and [Android](https://github.com/EspressifApp/EsptouchForAndroid) apps had to be heavily customized and tweaked in order to support custom task parameters.
+This package provides a high customizability to the ESP Touch tasks and an idiomatic Dart interface for launching tasks.
 
-This enables the users of this plugin change how long the task runs, you could set it to hours, if this is what your workflow requires.
+Custom task parameters lets the users of this plugin change how long the task runs, you could set it to hours, if this is what your workflow requires.
+
+If you like this package, I'd really appreciate a [**star on GitHub!**](https://github.com/smaho-engineering/esptouch_flutter).
+
+
+## Fundamentals
+
+### ESP-Touch
+
+Using ESP-Touch, you can configure network for ESP8266 and ESP32 devices.
+
+> Espressif’s ESP-Touch protocol implements the Smart Config technology to help users connect
+> ESP8266EX- and ESP32-embedded devices to a Wi-Fi network through simple configuration on a
+> smartphone.
+
+
+#### Resources
+
+You can read more about ESP-Touch here:
+
+* [Espressif ESP-Touch Overview](https://www.espressif.com/en/products/software/esp-touch/overview)
+* [ESP-Touch User Guide (`.pdf`)](https://www.espressif.com/sites/default/files/documentation/esp-touch_user_guide_en.pdf)
+* [Smart config API reference](https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/network/esp_smartconfig.html) - We don't directly use this in the plugin, but can help you understand how things work
+* [`EspressifApp/EsptouchForIOS`](https://github.com/EspressifApp/EsptouchForIOS) ESP-Touch for iOS using Objective-C
+* [`EspressifApp/EsptouchForAndroid`](https://github.com/EspressifApp/EsptouchForAndroid) ESP-Touch for Android using Java
+
+
+The original [iOS](https://github.com/EspressifApp/EsptouchForIOS) and
+[Android](https://github.com/EspressifApp/EsptouchForAndroid) apps had to be heavily customized and
+tweaked in order to support custom task parameters.
 
 ## Usage
 
 ### Example app
 
-For a complete example app, see [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
+For a complete example app, see the [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
+
+The example app lets you configure WiFi SSID, BSSID, password, the duration of the task, expected task count and many more.
 
 ### Code snippets
 
-TODO: Add code snippets in the README to clarify how the plugin should be used
+In the code example, I specify the types for clarity. You can omit them as they can be inferred.
+
+```dart
+import 'package:esptouch/esptouch.dart';
+
+// Somewhere in your widget...
+final ESPTouchTask task = ESPTouchTask(
+  ssid: 'My WiFi network',
+  bssid: 'ab:cd:ef:12:23:34',
+  password: 'ILoveFlutter',
+);
+final Stream<ESPTouchResult> stream = task.execute();
+StreamSubscription<ESPTouchResult> streamSubscription = stream.listen((ESPTouchResult result) {
+  print('Configured IP: ${result.ip} MAC: ${result.bssid}');
+});
+// Don't forget to cancel your stream subscription:
+streamSubscription.cancel();
+```
+
+If you would like to customize the task, provide `ESPTouchTaskParameter` instance as `taskParameter` to `ESPTouchTask`.
+
+```dart
+final ESPTouchTask task = ESPTouchTask(
+  ssid: 'My WiFi network',
+  bssid: 'ab:cd:ef:12:23:34',
+  password: 'ILoveFlutter',
+  taskParameter: ESPTouchTaskParameter(waitUdpReceiving: Duration(hour: 12)),
+);
+// You can still stop the task at any point by calling .cancel on the stream subscription:
+streamSubscription.cancel();
+```
+
+In a real world example, you could display the result to the user, save it locally in SQLite or send it to your backend. 
 
 ### API reference
 
-TODO: Improve existing Dart documentation and link the API reference so it's easily accessible from Github (not only on Dart Pub).
+The API reference is available on [`pub.dev`](https://pub.dev/documentation/esptouch_flutter/latest/).
+
+
+## Known issues
+
+* We needed full customizability for the touch task parameters, these made changing a significant
+  chunk of the Android and iOS platform side code necessary.
+  We added builders for the task parameters as this looked like a solution that required the least
+  changes to the platform code.
+* The only way I could implement this plugin is by pasting the platform-specific code into this
+  project. One reason for this was that it wasn't published anywhere as easily installable packages,
+  and the second reason is that I had to tweak the platform code to support configuration of
+  the ESPTouchTaskParameters. This means that new changes to the original git repositories do not
+  automatically show up in this project, so we need to manually update the Android and iOS code.
+* The underlying Android and iOS apps support different task parameters. There were multiple
+  changes especially around IPv4 vs IPv6 handling. The plugin does not handle all of these
+  differences.
+* Keeping track of finished tasks is necessary on Flutter's side.
 
 ## Contribute
 
 This is an open-source project built by the [SMAHO Engineering team from Munich](https://smaho.com) to wrap [Espressif](https://github.com/EspressifApp)'s ESP-Touch mobile app kits.
 
-If you discover issues or just want to improve the project, please contribute.
+If you discover issues or know how to improve the project, please contribute: open a pull request or issue.
+
+### [Flutter](https://flutter.io/)
+
+Flutter is Google's UI toolkit for creating beautiful, native experiences for iOS and Android from a single codebase.
+
+For help getting started with Flutter, view the [online documentation](https://flutter.io/docs), which offers tutorials, samples, guidance on mobile development, and a full API reference.
+
+#### [Flutter plugin packages](https://flutter.io/developing-packages/)
+
+This repository contains a Flutter plugin package for ESP-Touch. A plugin package is a specialized package that includes platform-specific implementation code for Android and iOS.
+
+#### [Platform channels](https://flutter.dev/docs/development/platform-integration)
+
+The Flutter portion of the app sends messages to its host, the iOS or Android portion of the app, over a platform channel.
 
 ### Get started
 
-To get started, run the example app.
+If you'd like to contribute, the best way to get started is by running the example app.
 
 1. **Install Flutter.**
     
@@ -37,6 +132,7 @@ To get started, run the example app.
     $ flutter --version
     $ flutter doctor
     ```
+
 2. **Configure your IDE.**
 
    * For Flutter and Dart code, you can use [Android Studio](https://flutter.dev/docs/development/tools/android-studio).
@@ -54,7 +150,7 @@ To get started, run the example app.
    appcode example/ios/Runner.xcworkspace
    ```
    
-   Make sure you don't see any red squiggly lines, a properly configured IDE will help *a lot* during development.
+   Make sure you don't see any red squiggly lines, *a properly configured IDE will help a lot during development*.
    
    This is my recommended setup, but other IDEs should also work, e.g [Visual Studio Code](https://flutter.dev/docs/development/tools/vs-code), IntelliJ, or Vim.
 
@@ -65,15 +161,17 @@ To get started, run the example app.
    flutter devices
    ```
 
-4. **Run example app**
+4. **Run the example app**
 
     1. `cd example`
     2. Install packages `flutter packages get`
-    3. Run the app `flutter run`. After some time, you should see the app open on your phone.
+    3. Run the app `flutter run`. After some time (~1 minute), you should see the app open on your phone.
 
 5. **Prepare embedded devices.**
 
-    To verify that the ESP-Touch app works, you need some hardware to connect to your WiFi network.
+    To verify that the ESP-Touch app works, you need some hardware with ESP8266 and ESP32 to connect to your WiFi network.
+    
+**Keep in mind that hot-reload and hot-restart will not reload platform code, so if you change java or obj-c files, you'll need to restart and recompile your app.**
 
 ### Style guides
 
@@ -84,32 +182,3 @@ When this is not available, fallback to these style guides:
 * Dart: [Effective Dart: Style](https://www.dartlang.org/guides/language/effective-dart/style) and [`dartfmt`](https://github.com/dart-lang/dart_style)
 * Objective-C: [Google Objective-C Style Guide](http://google.github.io/styleguide/objcguide.html)
 * Java: [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
-
-## Fundamentals
-
-> In this section, we include links and tutorials to basic technologies that this repository relies on. New developers should start by reading these documentation links.
-
-### [Flutter](https://flutter.io/)
-
-Flutter is Google's UI toolkit for creating beautiful, native experiences for iOS and Android from a single codebase.
-
-For help getting started with Flutter, view the [online documentation](https://flutter.io/docs), which offers tutorials, samples, guidance on mobile development, and a full API reference.
-
-#### [Flutter plugin packages](https://flutter.io/developing-packages/)
-
-This repository contains a Flutter plugin package for ESP-Touch. A plugin package is a specialized package that includes platform-specific implementation code for Android and iOS.
-
-
-### ESP-Touch
-
-Using ESP-Touch, you can configure network for ESP8266 and ESP32 devices.
-
-> Espressif’s ESP-Touch protocol implements the Smart Config technology to help users connect ESP8266EX- and ESP32-embedded devices to a Wi-Fi network through simple configuration on a smartphone.
-
-## Resources
-
-* [`EspressifApp/EsptouchForIOS`](https://github.com/EspressifApp/EsptouchForIOS) ESP-Touch for iOS using Objective-C
-* [`EspressifApp/EsptouchForAndroid`](https://github.com/EspressifApp/EsptouchForAndroid) ESP-Touch for Android using Java
-* [Espressif ESP-Touch Overview](https://www.espressif.com/en/products/software/esp-touch/overview)
-* [ESP-Touch User Guide (`.pdf`)](https://www.espressif.com/sites/default/files/documentation/esp-touch_user_guide_en.pdf)
-* [Smart config API reference](https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/network/esp_smartconfig.html) - We don't directly use this in the plugin, but can help you understand how things work
