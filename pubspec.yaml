@@ -1,6 +1,6 @@
 name: esptouch_flutter
 description: Flutter plugin for ESP-Touch to configure network for ESP-8266 and ESP-32 devices.
-version: 0.1.0
+version: 0.1.1
 author: Vince Varga <vince.varga@smaho.com>
 homepage: https://github.com/smaho-engineering/esptouch_flutter
 

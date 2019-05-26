@@ -1,4 +1,4 @@
-# `esptouch`
+# `esptouch_flutter`
 
 Flutter plugin package which contains an API for ESP-Touch written in Dart combined with
 platform-specific implementation for Android using Java and iOS using Objective-C.
@@ -7,8 +7,61 @@ This package provides a high customizability to the ESP Touch tasks and an idiom
 
 Custom task parameters lets the users of this plugin change how long the task runs, you could set it to hours, if this is what your workflow requires.
 
-If you like this package, I'd really appreciate a [**star on GitHub!**](https://github.com/smaho-engineering/esptouch_flutter).
+If you enjoy using this, I'd really appreciate a [**star on GitHub!**](https://github.com/smaho-engineering/esptouch_flutter).
 
+## Usage
+
+### Example app
+
+For a complete example app, see the [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
+
+The example app lets you configure WiFi SSID, BSSID, password, the duration of the task, expected task count and many more.
+
+### Code snippets
+
+```dart
+import 'package:esptouch_flutter/esptouch_flutter.dart';
+
+// Somewhere in your widget...
+final ESPTouchTask task = ESPTouchTask(
+  ssid: 'My WiFi network',
+  bssid: 'ab:cd:ef:12:23:34',
+  password: 'ILoveFlutter',
+);
+final Stream<ESPTouchResult> stream = task.execute();
+final printResult = (ESPTouchResult result) {
+ print('IP: ${result.ip} MAC: ${result.bssid}');
+};
+StreamSubscription<ESPTouchResult> streamSubscription = stream.listen(printResult);
+// Don't forget to cancel your stream subscription:
+streamSubscription.cancel();
+```
+
+If you would like to customize the task, provide `ESPTouchTaskParameter` instance as `taskParameter` to `ESPTouchTask`.
+
+```dart
+final ESPTouchTask task = ESPTouchTask(
+  ssid: 'My WiFi network',
+  bssid: 'ab:cd:ef:12:23:34',
+  password: 'ILoveFlutter',
+  // Tweak the task using task parameters
+  taskParameter: ESPTouchTaskParameter(waitUdpReceiving: Duration(hour: 12)),
+);
+// You can still stop the task at any point by calling .cancel on the stream subscription:
+streamSubscription.cancel();
+```
+
+In the code example, I specify the types for clarity. You can omit them as Dart can infer them.
+
+In a real world example, you could display the configured devices to the user, save it locally in SQLite or send it to your backend. 
+
+### API reference
+
+The Full API reference is available on [`pub.dev`](https://pub.dev/documentation/esptouch_flutter/latest/).
+
+We put effort into the docs, so if something is still not clear,
+[please open an issue](https://github.com/smaho-engineering/esptouch_flutter/issues/new).
+We will try top help you out and update the docs.
 
 ## Fundamentals
 
@@ -36,55 +89,6 @@ The original [iOS](https://github.com/EspressifApp/EsptouchForIOS) and
 [Android](https://github.com/EspressifApp/EsptouchForAndroid) apps had to be heavily customized and
 tweaked in order to support custom task parameters.
 
-## Usage
-
-### Example app
-
-For a complete example app, see the [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
-
-The example app lets you configure WiFi SSID, BSSID, password, the duration of the task, expected task count and many more.
-
-### Code snippets
-
-In the code example, I specify the types for clarity. You can omit them as they can be inferred.
-
-```dart
-import 'package:esptouch/esptouch.dart';
-
-// Somewhere in your widget...
-final ESPTouchTask task = ESPTouchTask(
-  ssid: 'My WiFi network',
-  bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
-);
-final Stream<ESPTouchResult> stream = task.execute();
-StreamSubscription<ESPTouchResult> streamSubscription = stream.listen((ESPTouchResult result) {
-  print('Configured IP: ${result.ip} MAC: ${result.bssid}');
-});
-// Don't forget to cancel your stream subscription:
-streamSubscription.cancel();
-```
-
-If you would like to customize the task, provide `ESPTouchTaskParameter` instance as `taskParameter` to `ESPTouchTask`.
-
-```dart
-final ESPTouchTask task = ESPTouchTask(
-  ssid: 'My WiFi network',
-  bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
-  taskParameter: ESPTouchTaskParameter(waitUdpReceiving: Duration(hour: 12)),
-);
-// You can still stop the task at any point by calling .cancel on the stream subscription:
-streamSubscription.cancel();
-```
-
-In a real world example, you could display the result to the user, save it locally in SQLite or send it to your backend. 
-
-### API reference
-
-The API reference is available on [`pub.dev`](https://pub.dev/documentation/esptouch_flutter/latest/).
-
-
 ## Known issues
 
 * We needed full customizability for the touch task parameters, these made changing a significant
@@ -100,6 +104,7 @@ The API reference is available on [`pub.dev`](https://pub.dev/documentation/espt
   changes especially around IPv4 vs IPv6 handling. The plugin does not handle all of these
   differences.
 * Keeping track of finished tasks is necessary on Flutter's side.
+* AES support (last I checked the support differred on Android and iOS, so I haven't added them)
 
 ## Contribute
 
@@ -107,32 +112,25 @@ This is an open-source project built by the [SMAHO Engineering team from Munich]
 
 If you discover issues or know how to improve the project, please contribute: open a pull request or issue.
 
-### [Flutter](https://flutter.io/)
+### Flutter
 
-Flutter is Google's UI toolkit for creating beautiful, native experiences for iOS and Android from a single codebase.
+If you are coming from IoT background, you might not know what Flutter is.
 
-For help getting started with Flutter, view the [online documentation](https://flutter.io/docs), which offers tutorials, samples, guidance on mobile development, and a full API reference.
+[Flutter](https://flutter.io/) is Google's UI toolkit for creating beautiful, native experiences for iOS and Android from a single codebase. For help getting started with Flutter, view the [online documentation](https://flutter.io/docs).
 
-#### [Flutter plugin packages](https://flutter.io/developing-packages/)
+#### Flutter plugin packages
 
-This repository contains a Flutter plugin package for ESP-Touch. A plugin package is a specialized package that includes platform-specific implementation code for Android and iOS.
+This repository contains a [Flutter plugin package](https://flutter.io/developing-packages/) for ESP-Touch. A plugin package is a specialized package that includes platform-specific implementation code for Android and iOS.
 
-#### [Platform channels](https://flutter.dev/docs/development/platform-integration)
+#### Platform channels
 
-The Flutter portion of the app sends messages to its host, the iOS or Android portion of the app, over a platform channel.
+The Flutter portion of the app sends messages to its host, the iOS or Android portion of the app, over a [platform channel](https://flutter.dev/docs/development/platform-integration). This plugin relies on platform channels (event channels) heavily.
 
 ### Get started
 
 If you'd like to contribute, the best way to get started is by running the example app.
 
-1. **Install Flutter.**
-    
-    Follow the [official installation guide](https://flutter.dev/docs/get-started/install). You can verify your installation by executing the following commands
-    ```
-    $ flutter --version
-    $ flutter doctor
-    ```
-
+1. **[Install Flutter](https://flutter.dev/docs/get-started/install).**
 2. **Configure your IDE.**
 
    * For Flutter and Dart code, you can use [Android Studio](https://flutter.dev/docs/development/tools/android-studio).
@@ -154,22 +152,15 @@ If you'd like to contribute, the best way to get started is by running the examp
    
    This is my recommended setup, but other IDEs should also work, e.g [Visual Studio Code](https://flutter.dev/docs/development/tools/vs-code), IntelliJ, or Vim.
 
-3. **Use a real phone for development.**
-
-   The plugin will not work in emulators and simulators, so you need real phones for development.
-   ```
-   flutter devices
-   ```
+3. **Use a real phone for development.** The plugin will not work in emulators and simulators, so you need real phones for development. Run `flutter devices` to verify.
 
 4. **Run the example app**
 
     1. `cd example`
     2. Install packages `flutter packages get`
-    3. Run the app `flutter run`. After some time (~1 minute), you should see the app open on your phone.
+    3. Run the app `flutter run`. After some time (~1 minute), you should see the app opening on your phone.
 
-5. **Prepare embedded devices.**
-
-    To verify that the ESP-Touch app works, you need some hardware with ESP8266 and ESP32 to connect to your WiFi network.
+5. **Prepare embedded devices.** To verify that the ESP-Touch app works, you need some hardware with ESP8266 and ESP32 to connect to your WiFi network.
     
 **Keep in mind that hot-reload and hot-restart will not reload platform code, so if you change java or obj-c files, you'll need to restart and recompile your app.**
 
