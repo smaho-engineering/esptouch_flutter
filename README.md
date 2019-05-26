@@ -26,7 +26,7 @@ import 'package:esptouch_flutter/esptouch_flutter.dart';
 final ESPTouchTask task = ESPTouchTask(
   ssid: 'My WiFi network',
   bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
+  password: 'I love SMAHO',
 );
 final Stream<ESPTouchResult> stream = task.execute();
 final printResult = (ESPTouchResult result) {
@@ -43,7 +43,7 @@ If you would like to customize the task, provide `ESPTouchTaskParameter` instanc
 final ESPTouchTask task = ESPTouchTask(
   ssid: 'My WiFi network',
   bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
+  password: 'I love Flutter and ESP-Touch, too',
   // Tweak the task using task parameters
   taskParameter: ESPTouchTaskParameter(waitUdpReceiving: Duration(hour: 12)),
 );
@@ -53,7 +53,7 @@ streamSubscription.cancel();
 
 In the code example, I specify the types for clarity. You can omit them as Dart can infer them.
 
-In a real world example, you could display the configured devices to the user, save it locally in SQLite or send it to your backend. 
+In a real world example, you'd get the WiFi credentials from a `TextEditingControlller` (e.g. `_passwordController.text`) and you could display the configured devices to the user, save it locally in SQLite or send it to your backend. 
 
 ### API reference
 

@@ -22,6 +22,25 @@ cd example
 flutter run
 ```
 
+### Screenshots
+
+When you run the example app, this is more or less what you should expect:
+
+
+#### Simple config
+
+Set WiFi details, such as name, address and password. All fields are editable.
+
+![Simple Configuration](https://github.com/smaho-engineering/esptouch_flutter/raw/master/example/screenshots/simple_config.png)
+
+
+#### Advanced config
+
+You can configure all task parameters right from your Flutter app. This level of configurability is not even supported in the official example apps.
+
+![Advanced Configuration](https://github.com/smaho-engineering/esptouch_flutter/raw/master/example/screenshots/advanced_config.png)
+
+
 ### Code snippets
 
 In the code example, I specify the types for clarity. You can omit them as Dart can infer them.
@@ -33,7 +52,7 @@ import 'package:esptouch_flutter/esptouch_flutter.dart';
 final ESPTouchTask task = ESPTouchTask(
   ssid: 'My WiFi network',
   bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
+  password: 'I love SMAHO',
 );
 final Stream<ESPTouchResult> stream = task.execute();
 StreamSubscription<ESPTouchResult> streamSubscription = stream.listen((ESPTouchResult result) {
@@ -49,7 +68,7 @@ If you would like to customize the task, provide `ESPTouchTaskParameter` instanc
 final ESPTouchTask task = ESPTouchTask(
   ssid: 'My WiFi network',
   bssid: 'ab:cd:ef:12:23:34',
-  password: 'ILoveFlutter',
+  password: 'The esptouch flutter plugin is awesome',
   taskParameter: ESPTouchTaskParameter(waitUdpReceiving: Duration(hour: 12)),
 );
 // You can still stop the task at any point by calling .cancel on the stream subscription:

@@ -1,3 +1,7 @@
+## 0.1.3
+
+Add example app screenshots
+
 ## 0.1.2
 
 More docs improvements. Add missing license.
