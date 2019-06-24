@@ -49,7 +49,7 @@ public class MainActivity extends FlutterActivity {
         ssid = null;
       }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
+        if (ssid != null && ssid.startsWith("\"") && ssid.endsWith("\"")) {
           ssid = ssid.substring(1, ssid.length() - 1);
         }
       }
