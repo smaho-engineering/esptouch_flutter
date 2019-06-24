@@ -1,3 +1,8 @@
+## 0.1.4
+
+* Request run-time permissions for location on Android M+ to make BSSID/SSID information work
+* Execute event sink methods on the main thread
+
 ## 0.1.3
 
 Add example app screenshots
