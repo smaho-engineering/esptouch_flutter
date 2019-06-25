@@ -1,3 +1,7 @@
+## 0.1.5
+
+* Fix podspecs for iOS
+
 ## 0.1.4
 
 * Request run-time permissions for location on Android M+ to make BSSID/SSID information work
