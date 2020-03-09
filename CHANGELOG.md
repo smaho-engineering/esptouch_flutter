@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Add simple example
+
 ## 0.2.0
 
 * Migrated to AndroidX

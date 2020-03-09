@@ -1,7 +1,10 @@
 # Examples for using the `esptouch_flutter` plugin
 
-The example demonstrates how to use the [`esptouch_flutter`](https://pub.dev/packages/esptouch_flutter) plugin.
-You can read the full source code on GitHub: [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the repository.
+The example app demonstrates how to use the [`esptouch_flutter`](https://pub.dev/packages/esptouch_flutter) plugin.
+
+You can read the full source code on GitHub: [`example` folder](https://github.com/smaho-engineering/esptouch_flutter/tree/master/example) in the `esptouch_flutter` repository. This example is a fully-configurable, fully-functional ESP Touch app that lets you configure all parameters and WiFi details (with the option of automatically recognizing the current network).
+
+There is also another example app that is available and it's available at [`smaho-engineering/esptouch_flutter_kotlin_example`](https://github.com/smaho-engineering/esptouch_flutter_kotlin_example). It's a much simpler app and you will need to edit the source code in order to enter the WiFi credentials to the simple example app.
 
 The example app lets you configure
 

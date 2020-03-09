@@ -17,6 +17,8 @@ For a complete example app, see the [`example` folder](https://github.com/smaho-
 
 The example app lets you configure WiFi SSID, BSSID, password, the duration of the task, expected task count and many more.
 
+For a simplest possible app, see the [`smaho-engineering/esptouch_flutter_kotlin_example`](https://github.com/smaho-engineering/esptouch_flutter_kotlin_example) repository.
+
 ### Code snippets
 
 ```dart
