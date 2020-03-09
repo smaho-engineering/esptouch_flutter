@@ -1,3 +1,10 @@
+## 0.2.0
+
+* Migrated to AndroidX
+* Change compileSdkVersion to 28
+    * Fix [`#3`](https://github.com/smaho-engineering/esptouch_flutter/issues/3): flutter build apk should now work again
+
+
 ## 0.1.5
 
 * Fix podspecs for iOS
