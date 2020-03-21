@@ -1,3 +1,9 @@
+## 0.2.2
+
+Remove EspTouchDemo-Info.plist
+
+No idea why it was there but it breaks my build 🤬
+
 ## 0.2.1
 
 * Add simple example
