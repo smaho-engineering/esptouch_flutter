@@ -80,9 +80,13 @@ streamSubscription.cancel();
 
 In a real world example, you could display the result to the user, save it locally in SQLite or send it to your backend.
 
-## Getting Started
+## Get WiFi details
 
-This project is a starting point for a Flutter application using the `esptouch_flutter` plugin.
+Quite often, you want to provide an easy way for getting the *current WiFi network's* SSID and BSSID. **Use the [`connectivity`](https://pub.dev/packages/connectivity) plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.**
+
+In the example app, we wrote the platform-specific code that fetches the WiFi details instead of using the `connectivity` plugin. See what you need to add to your platform code in [`MainActivity.java`](https://github.com/smaho-engineering/esptouch_flutter/blob/master/example/android/app/src/main/java/com/smaho/eng/esptouchexample/MainActivity.java) and [`AppDelegate.m`](https://github.com/smaho-engineering/esptouch_flutter/blob/master/example/ios/Runner/AppDelegate.m). For most cases, though, I recommend you to use the `connectivity` plugin, as it's well tested, frequently updated and it's maintained by the Flutter team.
+
+## Learning Flutter
 
 A few resources to get you started if this is your first Flutter project:
 
