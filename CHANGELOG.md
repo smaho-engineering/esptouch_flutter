@@ -1,3 +1,7 @@
+## 0.2.2+1
+
+README improvements
+
 ## 0.2.2
 
 Remove EspTouchDemo-Info.plist
