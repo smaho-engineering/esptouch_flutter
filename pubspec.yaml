@@ -13,5 +13,9 @@ dependencies:
 
 flutter:
   plugin:
-    androidPackage: com.smaho.eng.esptouch
-    pluginClass: EsptouchPlugin
+    platforms:
+      android:
+        package: com.smaho.eng.esptouch
+        pluginClass: EsptouchPlugin
+      ios:
+        pluginClass: EsptouchPlugin
