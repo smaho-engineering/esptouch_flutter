@@ -1,3 +1,7 @@
+## 0.2.4
+
+Remove deprecated pubspec keys.
+
 ## 0.2.3
 
 Reduce noisy logging
