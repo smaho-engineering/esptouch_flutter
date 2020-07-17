@@ -115,10 +115,7 @@ public class UDPSocketClient {
             try {
                 Thread.sleep(interval);
             } catch (InterruptedException e) {
-                e.printStackTrace();
-                if (__IEsptouchTask.DEBUG) {
-                    Log.w(TAG, "sendData is Interrupted");
-                }
+                Log.d(TAG, "sendData is Interrupted");
                 mIsStop = true;
                 break;
             }
