@@ -1,6 +1,7 @@
 ## 0.2.4
 
 Remove deprecated pubspec keys.
+README and example app improvements about stopping the ESP scan in 0.2.4+1.
 
 ## 0.2.3
 
