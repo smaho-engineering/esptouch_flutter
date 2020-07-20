@@ -276,19 +276,43 @@ class TaskRoute extends StatefulWidget {
 class TaskRouteState extends State<TaskRoute> {
   Stream<ESPTouchResult> _stream;
   StreamSubscription<ESPTouchResult> _streamSubscription;
+  Timer _timer;
+
+  final List<ESPTouchResult> _results = [];
 
   @override
   void initState() {
     _stream = widget.task.execute();
-    _streamSubscription = _stream.listen((value) {
-      // TODO(smaho): Don't use StreamBuilder and listen in the same example
-      print('Received value in TaskRouteState $value');
+    _streamSubscription = _stream.listen(_results.add);
+    final receiving = widget.task.taskParameter.waitUdpReceiving;
+    final sending = widget.task.taskParameter.waitUdpSending;
+    final cancelLatestAfter = receiving + sending;
+    _timer = Timer(cancelLatestAfter, () {
+      _streamSubscription?.cancel();
+      if (_results.isEmpty && mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('No devices found'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context)..pop()..pop();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            });
+      }
     });
     super.initState();
   }
 
   @override
   dispose() {
+    _timer.cancel();
     _streamSubscription?.cancel();
     super.dispose();
   }
@@ -310,12 +334,7 @@ class TaskRouteState extends State<TaskRoute> {
   }
 
   Widget error(BuildContext context, String s) {
-    return Center(
-      child: Text(
-        s,
-        style: TextStyle(color: Colors.red),
-      ),
-    );
+    return Center(child: Text(s, style: TextStyle(color: Colors.red)));
   }
 
   copyValue(BuildContext context, String label, String v) {
@@ -334,7 +353,7 @@ class TaskRouteState extends State<TaskRoute> {
     return ListView.builder(
       itemCount: _results.length,
       itemBuilder: (_, index) {
-        final result = _results.toList(growable: false)[index];
+        final result = _results[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -366,8 +385,6 @@ class TaskRouteState extends State<TaskRoute> {
     );
   }
 
-  final Set<ESPTouchResult> _results = Set();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -390,7 +407,6 @@ class TaskRouteState extends State<TaskRoute> {
             }
             switch (snapshot.connectionState) {
               case ConnectionState.active:
-                _results.add(snapshot.data);
                 return resultList(context);
               case ConnectionState.none:
                 return noneState(context);
@@ -399,6 +415,7 @@ class TaskRouteState extends State<TaskRoute> {
               case ConnectionState.waiting:
                 return waitingState(context);
             }
+            return error(context, 'Unexpected');
           },
           stream: _stream,
         ),
