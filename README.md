@@ -124,6 +124,12 @@ tweaked in order to support custom task parameters.
 * Keeping track of finished tasks is necessary on Flutter's side.
 * AES support (last I checked the support differred on Android and iOS, so I haven't added them)
 
+## Working on iOS 14.6
+Starting from iOS 14.6 we need to add `com.apple.developer.networking.multicast` entitlement to allow our package can send or receive IP multicast or broadcast on iOS.
+This is hidden capabilities, you need to request it as account holder [here](https://developer.apple.com/contact/request/networking-multicast).
+And config it as [here](https://developer.apple.com/forums/thread/663271)
+![Screen Shot 2021-06-21 at 17 24 50](https://user-images.githubusercontent.com/50801656/122798220-87f39580-d2ea-11eb-838e-faeeed28fc8e.png)
+
 ## Contribute
 
 This is an open-source project built by the [SMAHO Engineering team from Munich](https://smaho.com) to wrap [Espressif](https://github.com/EspressifApp)'s ESP-Touch mobile app kits.
