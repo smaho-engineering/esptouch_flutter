@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 /// ESPTouch packet type, either broadcast or multicast.
 enum ESPTouchPacket { broadcast, multicast }
@@ -11,6 +10,14 @@ enum ESPTouchPacket { broadcast, multicast }
 /// When working with ESPTouch's [ESPTouchTask], the output of a task is basically
 /// a [Stream]<[ESPTouchResult]>.
 class ESPTouchResult {
+  /// Create ESPTouchResult
+  const ESPTouchResult(this.ip, this.bssid);
+
+  /// Create strongly-typed ESPTouchResult instance from a map.
+  ESPTouchResult.fromMap(Map<dynamic, dynamic> m)
+      : ip = m['ip'],
+        bssid = m['bssid'];
+
   /// IP address of the connected device on the local network in string representation.
   ///
   /// Example: 127.0.0.55
@@ -20,14 +27,6 @@ class ESPTouchResult {
   ///
   /// Example: `ab:cd:ef:c0:ff:33`, or without colons `abcdefc0ff33`
   final String bssid;
-
-  /// Create ESPTouchResult
-  ESPTouchResult(this.ip, this.bssid);
-
-  /// Create strongly-typed ESPTouchResult instance from a map.
-  ESPTouchResult.fromMap(Map<dynamic, dynamic> m)
-      : ip = m['ip'],
-        bssid = m['bssid'];
 
   /// We provide == operator implementation: if two results have the same IP
   /// and BSSID, we consider them the same.
@@ -90,29 +89,28 @@ class ESPTouchTask {
   final ESPTouchPacket packet;
 
   /// Configuration parameters for the task,
-  ESPTouchTaskParameter taskParameter;
+  final ESPTouchTaskParameter taskParameter;
 
-  ESPTouchTask({
-    @required this.ssid,
-    @required this.bssid,
+  const ESPTouchTask({
+    required this.ssid,
+    required this.bssid,
     this.password = '',
     this.packet = ESPTouchPacket.broadcast,
-    this.taskParameter,
+    this.taskParameter = const ESPTouchTaskParameter(),
   });
 
   /// Launch ESPTouch task and listen for events.
   ///
   /// The
   Stream<ESPTouchResult> execute() {
-    if (ssid == null || bssid == null) {
-      throw ArgumentError('SSID and BSSID for Wi-Fi network is required.');
-    }
+    assert(ssid.isNotEmpty, 'SSID can\'t be empty');
+    assert(bssid.isNotEmpty, 'BSSID can\'t be empty');
     return _eventChannel.receiveBroadcastStream({
       'ssid': ssid,
       'bssid': bssid,
       'password': password,
       'packet': packet == ESPTouchPacket.broadcast ? '1' : '0',
-      'taskParameter': (taskParameter ?? ESPTouchTaskParameter()).toMap(),
+      'taskParameter': taskParameter.toMap(),
     }).map((event) => ESPTouchResult.fromMap(event));
   }
 }
@@ -122,46 +120,8 @@ class ESPTouchTask {
 /// This provides great flexibility, you can for example run an [ESPTouchTask]
 /// for hours, if this is what your workflow requires.
 class ESPTouchTaskParameter {
-  // I couldn't figure out what all of these values actually mean.
-  // The "official" documentation is not very helpful, either.
-  // iOS Objective-C: https://github.com/EspressifApp/EsptouchForIOS/blob/master/EspTouchDemo/ESPTouchTaskParameter.h
-  // Android Java: https://github.com/EspressifApp/EsptouchForAndroid/blob/master/esptouch/src/main/java/com/espressif/iot/esptouch/task/IEsptouchTaskParameter.java
-  /// the time between each guide code sending
-  Duration intervalGuideCode;
-
-  /// the time between each data code sending
-  Duration intervalDataCode;
-  Duration timeoutGuideCode;
-  Duration timeoutDataCode;
-  int repeat;
-  int oneLength;
-
-  /// MAC length in result
-  int macLength;
-
-  /// IP length in result
-  int ipLength;
-
-  /// Listening port, used by the server
-  int portListening;
-
-  /// Target port, used by the client
-  int portTarget;
-
-  /// Wait UDP receiving, without sending
-  Duration waitUdpReceiving;
-
-  /// Wait UDP sending, including receiving
-  Duration waitUdpSending;
-
-  /// Threshold for how many correct broadcast should be received
-  int thresholdSucBroadcastCount;
-
-  /// Return results up to [expectedTaskResults] count.
-  int expectedTaskResults;
-
   /// Create ESPTouchTaskParameter.
-  ESPTouchTaskParameter({
+  const ESPTouchTaskParameter({
     this.intervalGuideCode = const Duration(milliseconds: 8),
     this.intervalDataCode = const Duration(milliseconds: 8),
     this.timeoutGuideCode = const Duration(seconds: 2),
@@ -177,6 +137,44 @@ class ESPTouchTaskParameter {
     this.thresholdSucBroadcastCount = 1,
     this.expectedTaskResults = 1,
   });
+
+  // I couldn't figure out what all of these values actually mean.
+  // The "official" documentation is not very helpful, either.
+  // iOS Objective-C: https://github.com/EspressifApp/EsptouchForIOS/blob/master/EspTouchDemo/ESPTouchTaskParameter.h
+  // Android Java: https://github.com/EspressifApp/EsptouchForAndroid/blob/master/esptouch/src/main/java/com/espressif/iot/esptouch/task/IEsptouchTaskParameter.java
+  /// the time between each guide code sending
+  final Duration intervalGuideCode;
+
+  /// the time between each data code sending
+  final Duration intervalDataCode;
+  final Duration timeoutGuideCode;
+  final Duration timeoutDataCode;
+  final int repeat;
+  final int oneLength;
+
+  /// MAC length in result
+  final int macLength;
+
+  /// IP length in result
+  final int ipLength;
+
+  /// Listening port, used by the server
+  final int portListening;
+
+  /// Target port, used by the client
+  final int portTarget;
+
+  /// Wait UDP receiving, without sending
+  final Duration waitUdpReceiving;
+
+  /// Wait UDP sending, including receiving
+  final Duration waitUdpSending;
+
+  /// Threshold for how many correct broadcast should be received
+  final int thresholdSucBroadcastCount;
+
+  /// Return results up to [expectedTaskResults] count.
+  final int expectedTaskResults;
 
   get _totalLength {
     return oneLength + macLength + ipLength;
@@ -215,5 +213,41 @@ class ESPTouchTaskParameter {
       'thresholdSucBroadcastCount': thresholdSucBroadcastCount,
       'expectTaskResultCount': expectedTaskResults,
     };
+  }
+
+  /// Copy the task parameter with some fields changed.
+  ESPTouchTaskParameter copyWith({
+    Duration? intervalGuideCode,
+    Duration? intervalDataCode,
+    Duration? timeoutGuideCode,
+    Duration? timeoutDataCode,
+    int? repeat,
+    int? oneLength,
+    int? macLength,
+    int? ipLength,
+    int? portListening,
+    int? portTarget,
+    Duration? waitUdpReceiving,
+    Duration? waitUdpSending,
+    int? thresholdSucBroadcastCount,
+    int? expectedTaskResults,
+  }) {
+    return ESPTouchTaskParameter(
+      intervalGuideCode: intervalGuideCode ?? this.intervalGuideCode,
+      intervalDataCode: intervalDataCode ?? this.intervalDataCode,
+      timeoutGuideCode: timeoutGuideCode ?? this.timeoutGuideCode,
+      timeoutDataCode: timeoutDataCode ?? this.timeoutDataCode,
+      repeat: repeat ?? this.repeat,
+      oneLength: oneLength ?? this.oneLength,
+      macLength: macLength ?? this.macLength,
+      ipLength: ipLength ?? this.ipLength,
+      portListening: portListening ?? this.portListening,
+      portTarget: portTarget ?? this.portTarget,
+      waitUdpReceiving: waitUdpReceiving ?? this.waitUdpReceiving,
+      waitUdpSending: waitUdpSending ?? this.waitUdpSending,
+      thresholdSucBroadcastCount:
+          thresholdSucBroadcastCount ?? this.thresholdSucBroadcastCount,
+      expectedTaskResults: expectedTaskResults ?? this.expectedTaskResults,
+    );
   }
 }

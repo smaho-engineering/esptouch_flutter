@@ -1,16 +1,15 @@
 name: esptouch_flutter
-description: Flutter plugin for ESP-Touch to configure network for ESP-8266 and ESP-32 devices. Runs on iOS and Android.
-version: 0.2.4+1
+description: Flutter plugin for ESP-Touch (Smart Config) to configure network for ESP-8266 and ESP-32 devices. Runs on iOS and Android.
+version: 1.0.0
 homepage: https://github.com/smaho-engineering/esptouch_flutter
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
-  flutter: ">=1.12.0 <2.0.0"
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: '>=1.12.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  meta: '>0.9.0 <2.0.0'
 
 flutter:
   plugin:

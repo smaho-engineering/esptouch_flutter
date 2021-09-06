@@ -1,3 +1,10 @@
+## 1.0.0
+
+* Migrate package to Dart's null safety language feature, requiring Dart 2.12 or higher. Close [`esptouch_flutter #17`](https://github.com/smaho-engineering/esptouch_flutter/issues/17).
+* Add `const` constructor to `ESPTouchTaskParameter`, and make all fields final. In case you relied on the task parameter fields being mutable, use the `copyWith` method on the `ESPTouchTaskParameter`. 
+* Add `const` constructor to `ESPTouchResult`.
+* Update example app to null safety and remove anything deprecated. Simplify example app (no private, only one file, etc...).
+
 ## 0.2.4
 
 Remove deprecated pubspec keys.
