@@ -1,31 +1,41 @@
 package com.smaho.eng.esptouch;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.espressif.iot.esptouch.task.EsptouchTaskParameter;
 
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+
 /** EsptouchPlugin */
-public class EsptouchPlugin implements EventChannel.StreamHandler {
+public class EsptouchPlugin implements EventChannel.StreamHandler, FlutterPlugin, ActivityAware {
   private static final String TAG = "EsptouchPlugin";
   private static final String CHANNEL_NAME= "eng.smaho.com/esptouch_plugin/results";
 
+  /** backward compatibility with embedding v1 **/
+  @SuppressWarnings("deprecation") // Registrar deprecated (v1 plugin embedding).
   public static void registerWith(Registrar registrar) {
-    final EventChannel eventChannel = new EventChannel(registrar.messenger(), CHANNEL_NAME);
-    eventChannel.setStreamHandler(new EsptouchPlugin(registrar.context()));
+    EsptouchPlugin plugin = new EsptouchPlugin();
+    plugin.activity = registrar.activity();
+    plugin.context = registrar.context();
+    plugin.setupMethodChannel(registrar.messenger());
   }
 
-  private final Context context;
+  private EventChannel channel;
+  private Activity activity;
+  private Context context;
   private EspTouchTaskUtil taskUtil;
-
-  private EsptouchPlugin(Context context) {
-    this.context = context;
-  }
 
   private EsptouchTaskParameter buildTaskParameter(Map<String, Integer> m) {
     EsptouchTaskParameter.Builder b = new EsptouchTaskParameter.Builder();
@@ -45,6 +55,44 @@ public class EsptouchPlugin implements EventChannel.StreamHandler {
     b.setThresholdSucBroadcastCount(m.get("thresholdSucBroadcastCount"));
     b.setExpectTaskResultCount(m.get("expectTaskResultCount"));
     return new EsptouchTaskParameter(b);
+  }
+
+
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    context = binding.getApplicationContext();
+    setupMethodChannel(binding.getBinaryMessenger());
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setStreamHandler(null);
+    channel = null;
+  }
+
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    activity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+    activity = null;
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+    activity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
+    activity = null;
+  }
+
+  private void setupMethodChannel(BinaryMessenger messenger) {
+    channel = new EventChannel(messenger, CHANNEL_NAME);
+    channel.setStreamHandler(this);
   }
 
   @Override
