@@ -6,15 +6,15 @@ import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import io.flutter.app.FlutterActivity;
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
   private static final String CHANNEL = "eng.smaho.com/esptouch_plugin/example";
@@ -24,20 +24,19 @@ public class MainActivity extends FlutterActivity {
   private MethodChannel.Result result;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    GeneratedPluginRegistrant.registerWith(this);
-    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
-        (call, result) -> {
-          this.call = call;
-          this.result = result;
-          // https://developer.android.com/about/versions/marshmallow/android-6.0-changes#behavior-hardware-id
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            handlePermissions();
-          } else {
-            handleMethodCall();
-          }
-        }
+  public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+    super.configureFlutterEngine(flutterEngine);
+    new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL).setMethodCallHandler(
+            (call, result) -> {
+              this.call = call;
+              this.result = result;
+              // https://developer.android.com/about/versions/marshmallow/android-6.0-changes#behavior-hardware-id
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                handlePermissions();
+              } else {
+                handleMethodCall();
+              }
+            }
     );
   }
 
