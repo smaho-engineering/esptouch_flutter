@@ -1,3 +1,7 @@
+## 1.1.0-androidv2
+
+* Android embedding v2. Includes [PR `#28`](https://github.com/smaho-engineering/esptouch_flutter/pull/28). Fixes [`#19`](https://github.com/smaho-engineering/esptouch_flutter/issues/19) and [`#29`](https://github.com/smaho-engineering/esptouch_flutter/issues/29).
+
 ## 1.0.0
 
 * Migrate package to Dart's null safety language feature, requiring Dart 2.12 or higher. Close [`esptouch_flutter #17`](https://github.com/smaho-engineering/esptouch_flutter/issues/17).
